@@ -7,7 +7,7 @@ import { db } from './firebaseConnection';
 // importar o doc e realizar alterações importando o fireStore
 import {doc, setDoc} from 'firebase/firestore'
 //Importando o app.css para estilização da pagina 
-import './app.css';
+import './App.css';
 
 function App() {
   //aqui ele lê e realizar alterações no titulo da pagina
