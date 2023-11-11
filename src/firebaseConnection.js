@@ -5,7 +5,7 @@ import { initializeApp } from 'firebase/app'
 
 //Aqui importamos o getFirestore para termos comunicação com o que vamos utilizar , no caso é o firebase/firestore e passamos o getFirestore : ele vai pegar as informações do baco firestore
 import  {getFirestore} from 'firebase/firestore'
-
+// essas informações você consegui pegar direto no site do firebase , quando você realizar o login 
 const firebaseConfig = {
     apiKey: "AIzaSyCcHc8uaj7TH9yBHbfU83rqUAT8bfUALi8",
     authDomain: "curso-d7682.firebaseapp.com",

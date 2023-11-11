@@ -1,73 +1,154 @@
+//Projeto de validação e cadastro , utilizando o ReactJS , Firebase(Banco de dados) , github e netlify (Deploy )
+
+
 
 //Precisamos pegar o valor em cada campo digitado na nossa pagina pra isso temos que utlizar as useState
-import { useState } from 'react'; 
-//Importado o db que criamos e ja realizamos a exportação no firebaConnection.js
+import { useState } from 'react';
+
+//Importando o db que criamos e ja realizamos a exportação no firebaConnection.js
 import { db } from './firebaseConnection';
 
 // importar o doc e realizar alterações importando o fireStore
-import {doc, setDoc} from 'firebase/firestore'
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
+
+import './dynamicSelect'
+
 //Importando o app.css para estilização da pagina 
 import './App.css';
+import DynamicSelect from './dynamicSelect';
 
 function App() {
   //aqui ele lê e realizar alterações no titulo da pagina
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [unidade,setUnidade] = useState('');
+  const [unidade, setUnidade] = useState('');
+  const [estado, setEstado] = useState('');
+ 
+
+
+
+
   //temos que trasforma essa função em async
-  async function handleAdd(){
-   
+  async function handleAdd() {
+
     //Aqui Criamos um documento novo.
-    await setDoc(doc(db , "tarefas", "12345"), {
+    //await setDoc(doc(db , "tarefas", "12345" ), {
+    //nome: nome,
+    //telefone: telefone,
+    // unidade: unidade
+    //})
+    //.then(() => {
+    //alert ("Dados registrados no banco")
+    //})
+
+    //.catch((error) => {
+    // alert("Gerol erro " + error)
+    // })
+
+
+
+    await addDoc(collection(db, "dados"), {
       nome: nome,
       telefone: telefone,
-      unidade: unidade
-    })
-    .then(() => {
-      console.log("Dados registrados no banco")
-    })
+      estado: estado,
+      unidade: unidade,
 
-    .catch((error) => {
-      console("Gerol erro " + error)
+     
 
     })
+
+      .then(() => {
+        console.log("Cadastradocom sucesso")
+        setNome('');
+        setTelefone('');
+        setEstado('');
+        setUnidade('');
+        
+       
+
+      })
+
+      .catch((error) => {
+        alert("Gerol erro " + error)
+
+      })
+
+
 
   }
-  
   return (
-    <div>
-      <h1>Tela de cadastro</h1>
-
-      <div className="container">
-        <label>Nome completo: </label>
-        <textarea
-          type="text"
-          placeholder="Digite um titulo"
-          //Aqui atribuimos o valor ao titulo
-          value={nome}
-          //Toda vez que digitar alguma tecla dentro de titulo ele vai disparar o onchange e vai colocar a informação dentro da useState  
-          onChange={ (e) => setNome(e.target.value) }
-        />
-        <label>Tel:</label>
-        <input type="number"
-          placeholder="Autor do post"
-          value={telefone}
-          onChange={(e) => setTelefone(e.target.value) }
-        />
 
 
 
-        <label>Unidade:</label>
-        <input type="text"
-          placeholder="Unidade"
-          value={unidade}
-          onChange={(e) => setUnidade(e.target.value) }
-        />
+    <div className="container p-5 my-1 border">
 
-        <button onClick={handleAdd}>Cadastrar!</button>
+
+
+
+      <div >
+      <img src="gamestations.jpeg" class="rounded-circle" alt="Cinque Terre" width="250" height="250"/> 
+        <h3>Formulario</h3>
+        <p>Preencha todos os campos.</p>
+
+        <form className="was-validated">
+          <div className="mb-3 mt-3">
+            <label for="uname" className="form-label">Nome:</label>
+            <input type="text" className="form-control" placeholder="Nome completo" value={nome} onChange={(e) => setNome(e.target.value)} required />
+            <div className="valid-feedback">Valido.</div>
+            <div className="invalid-feedback">Por favor, preencha este campo.</div>
+          </div>
+          <div className=" mb-3 mt-3">
+            <label for="tel" className="form-label">Telefone:</label>
+            <input type="number" className="form-control" placeholder="(DDD) 00000-0000" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
+            <div className="valid-feedback">Valido.</div>
+            <div className="invalid-feedback">Por favor, preencha este campo.</div>
+
+          </div>
+
+
+
+
+
+
+
+          <DynamicSelect />
+
+          <div class="form-check mb-3 mt-3">
+            <input class="form-check-input" type="checkbox" id="myCheck" name="remember" required />
+            <label class="form-check-label" for="myCheck">Siga nossa pagina no instagram.</label>
+            <div class="valid-feedback">Valido.</div>
+            <div class="invalid-feedback">Marque essa opção para continuar.</div>
+            
+           
+
+         
+           
+
+          </div>
+         
+
+         
+          
+         
+
+
+        </form>
+
+        
+
       </div>
+      <a href="https://www.instagram.com/oficialgamestation/" target='blank'> <button type="submit" onClick={handleAdd} class="btn btn-primary"  >Cadastrar</button></a>
+     
     </div>
+
   );
+
+
+
 }
+
+
+
+
 
 export default App;
