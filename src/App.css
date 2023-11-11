@@ -1,11 +1,25 @@
 .container{
+ max-width: 100%;
     width: 600px;
     display: flex;
     flex-direction: column;
 }
 
 img{
+    max-width: 100%;
    margin-left: 110px;
    padding: 10px;
+
+}
+
+body{
    
+}
+
+@media (max-width: 569px) {
+    img{
+        text-align: center;
+        width: 40%;
+        height: 600%;
+    }
 }
